@@ -1,6 +1,6 @@
 # SNU ----------------------------------------------------
 # Please specify your student ID:
-STUDENTID =
+STUDENTID = 2021-13843
 
 # Do not change the following PANUM
 PANUM = pa1
