@@ -3,6 +3,7 @@
 #include "memlayout.h"
 #include "riscv.h"
 #include "defs.h"
+#include "banner.h"
 
 volatile static int started = 0;
 
@@ -15,6 +16,12 @@ main()
     printfinit();
     printf("\n");
     printf("xv6 kernel is booting\n");
+    printf("\n");
+    printf("SNUOS2026\n");
+    printf("2021-13843\n");
+    printf("Junhee Kim\n");
+    printf("\n");
+    print_banner();
     printf("\n");
     kinit();         // physical page allocator
     kvminit();       // create kernel page table
