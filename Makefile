@@ -3,7 +3,7 @@
 STUDENTID =
 
 # Do not change the following PANUM
-PANUM = pa1
+PANUM = pa2
 _PANUM = $(strip $(PANUM))
 ifndef STUDENTID
 $(error Please set STUDENTID in Makefile)
@@ -44,7 +44,8 @@ OBJS = \
   $K/sysfile.o \
   $K/kernelvec.o \
   $K/plic.o \
-  $K/virtio_disk.o
+  $K/virtio_disk.o \
+  $K/machinevec.o
 
 # riscv64-unknown-elf- or riscv64-linux-gnu-
 # perhaps in /opt/riscv/bin
@@ -162,6 +163,8 @@ UPROGS=\
 	$U/_logstress\
 	$U/_forphan\
 	$U/_dorphan\
+	$U/_misa\
+	$U/_reset\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)

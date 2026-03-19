@@ -42,3 +42,7 @@ entry("getpid");
 entry("sbrk");
 entry("pause");
 entry("uptime");
+# SNU
+entry("misa");
+entry("reset");
+#endif

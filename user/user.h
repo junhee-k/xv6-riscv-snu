@@ -24,6 +24,10 @@ int getpid(void);
 char* sys_sbrk(int,int);
 int pause(int);
 int uptime(void);
+#ifdef SNU
+int misa(uint64 *);
+int reset(void);
+#endif
 
 // ulib.c
 int stat(const char*, struct stat*);

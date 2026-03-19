@@ -107,3 +107,24 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+#ifdef SNU
+uint64
+sys_misa(void)
+{
+  
+
+
+  return -1;
+}
+
+
+uint64
+sys_reset(void)
+{
+
+
+
+  return -1;
+}
+#endif
