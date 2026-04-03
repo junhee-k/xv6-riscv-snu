@@ -112,19 +112,42 @@ sys_uptime(void)
 uint64
 sys_misa(void)
 {
-  
+  uint64 buf;
+  argaddr(0, &buf);
 
+  // ecall into M-mode to read the misa CSR
+  uint64 val;
+  asm volatile(
+    "li a7, 1\n"
+    "ecall\n"
+    "mv %0, a0\n"
+    : "=r" (val)
+    :
+    : "a7", "a0"
+  );
 
-  return -1;
+  // Copy the misa value out to user space
+  struct proc *p = myproc();
+  if (copyout(p->pagetable, buf, (char *)&val, sizeof(val)) < 0)
+    return -1;
+
+  return 0;
 }
 
 
 uint64
 sys_reset(void)
 {
+  // ecall into M-mode to trigger reset via finisher
+  asm volatile(
+    "li a7, 2\n"
+    "ecall\n"
+    :
+    :
+    : "a7", "a0"
+  );
 
-
-
+  // If we reach here, reset failed
   return -1;
 }
 #endif

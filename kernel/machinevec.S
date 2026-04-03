@@ -16,7 +16,31 @@
 .globl machinevec
 .align 4
 machinevec:
-        # M-mode code here
-       
+        // if a7 == 1, misa, else if a7 == 2, reset.
+        li t0, 1
+        beq a7, t0, misa_service
+        li t0, 2
+        beq a7, t0, reset_service
 
+        // else, return -1 for unknown service
+        li a0, -1
+        j done
 
+misa_service:
+        csrr a0, misa
+        j done
+
+reset_service:
+        li t0, 0x100000
+        li t1, 0x7777
+        sw t1, 0(t0)
+        // if we reach here, reset failed
+        li a0, -1
+        j done
+
+done:
+        // advance mepc past the ecall instruction (4 bytes)
+        csrr t0, mepc
+        addi t0, t0, 4
+        csrw mepc, t0
+        mret

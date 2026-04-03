@@ -27,8 +27,10 @@ start()
   // disable paging for now.
   w_satp(0);
 
-  // delegate all interrupts and exceptions to supervisor mode.
-  w_medeleg(0xffff);
+  // delegate all interrupts and exceptions to supervisor mode,
+  // except ecall from S-mode (cause 9) so that
+  // it traps into M-mode for misa/reset services.
+  w_medeleg(0xffff & ~(1 << 9));
   w_mideleg(0xffff);
   w_sie(r_sie() | SIE_SEIE | SIE_STIE);
 
@@ -36,6 +38,10 @@ start()
   // access to all of physical memory.
   w_pmpaddr0(0x3fffffffffffffull);
   w_pmpcfg0(0xf);
+
+  // set up M-mode trap vector for S-mode ecalls
+  extern void machinevec();
+  w_mtvec((uint64)machinevec);
 
   // ask for clock interrupts.
   timerinit();
