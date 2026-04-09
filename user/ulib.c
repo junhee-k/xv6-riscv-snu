@@ -100,7 +100,6 @@ stat(const char *n, struct stat *st)
 
 #ifdef SNU
 // Make atoi() recognize negative integers
-// Make atoi() recognize negative integers
 int
 atoi(const char *s)
 {
